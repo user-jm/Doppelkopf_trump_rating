@@ -1,1 +1,2 @@
-# Doppelkopf_trump_rating
+Ausführen "python TrumpRating.py"
+optionaler Parameter für Soloregeln: "--solo" mit möglichen Übergabeparametern "n" - none, "U" - Untersolo, "O" - Obersolo, "H" - Herzsolo, "B" - Blattsolo, "E" - Eichelsolo
