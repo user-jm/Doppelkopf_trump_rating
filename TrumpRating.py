@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
 # proposal for a trump rating function for Doppelkopf
-# The core function calculate_trump_power applies the formula  p = (c_q*q + n + c_t*t)/c to calculate the trump rating (p) as weighted sum of trump quality (q), quantity (n) and the number of unbeatable trumps (t). Unbeatable card hands get a trump power of 100 (normalization factor (c) is set accordingly). Trump quality is numerically expressed using an arctan-function (details see below).
+# The core function calculate_trump_power applies the formula  p = (c_q*q + n + c_t*t)/c to calculate the trump rating (p) 
+# as weighted sum of trump quality (q), quantity (n) and the number of unbeatable trumps (t). 
+# Unbeatable card hands get a trump power of 100 (normalization factor (c) is set accordingly).
+# Trump quality is numerically expressed using an arctan-function (details see below).
 # main() sets a test frame with randomly assigned cards to four players. The sorted card hands and their respective trump ratings appear in the output.
 
 import sys
@@ -186,16 +189,16 @@ def calculate_trump_power(card_list, bock, schweinchen, special_solo):
             # 1) set parameters and normalization constants
             if schweinchen:
                 if bock:
-                    c = 5.99 # normalization constant: trump power should be 100 if player has all unbeatable trump (depends on choices for other parameters)
+                    c = 3.15 # normalization constant: trump power should be 100 if player has all unbeatable trump (depends on choices for other parameters)
                 else:
-                    c = 4.71
+                    c = 2.47
             else:
                 if bock:
-                    c = 5.94
+                    c = 3.13
                 else:
-                    c = 3.8
+                    c = 2.02
             c_t = 4 # weight of unbeatable trump
-            c_q = 2 # weight of quality (card of highest quality gets a quality value of 1.5*c_q,
+            c_q = 1 # weight of quality (card of highest quality gets a quality value of 3*c_q,
                     # for comparison: the quantity score is 1 for every card
         
             # 2) calculate trump quality
@@ -285,7 +288,7 @@ def calculate_trump_power(card_list, bock, schweinchen, special_solo):
 
 
 def main():
-    # define card deck 24 different cards, ranging from 1 to 24
+    # define card deck of 24 different cards, ranging from 1 to 24
     card_deck = [i + 1 for i in range(24)]
     # each card type exists twice -> double deck
     card_deck.extend(card_deck)
@@ -308,7 +311,7 @@ def main():
     # e.g. python TrumpRating.py --solo O (The script name ifself is one element of sys.argv.)
     for i in range(len(sys.argv)):
         if sys.argv[i] == "--solo":
-            # "--solo" after solo
+            # check argument after "--solo" after for solo type-
             if i < len(sys.argv):
                 if sys.argv[i+1] in special_rules:
                     special_solo = sys.argv[i+1]
