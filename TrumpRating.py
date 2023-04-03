@@ -189,16 +189,16 @@ def calculate_trump_power(card_list, bock, schweinchen, special_solo):
             # 1) set parameters and normalization constants
             if schweinchen:
                 if bock:
-                    c = 3.15 # normalization constant: trump power should be 100 if player has all unbeatable trump (depends on choices for other parameters)
+                    c = 0.58 # normalization constant: trump power should be 100 if player has all unbeatable trump (depends on choices for other parameters)
                 else:
-                    c = 2.47
+                    c = 0.45
             else:
                 if bock:
-                    c = 3.13
+                    c = 0.578
                 else:
-                    c = 2.02
+                    c = 0.446
             c_t = 4 # weight of unbeatable trump
-            c_q = 1 # weight of quality (card of highest quality gets a quality value of 3*c_q,
+            c_q = 1 # weight of quality (card of highest quality gets a quality value of 2.2*c_q,
                     # for comparison: the quantity score is 1 for every card
         
             # 2) calculate trump quality
@@ -244,8 +244,8 @@ def calculate_trump_power(card_list, bock, schweinchen, special_solo):
                 else:
                     arg = 0
                 
-                q = q + c_q*(math.atan(arg) + 1.5) # arctan ranges from -pi/2 to pi/2 
-                # in order to avoid negative values, add 1.5
+                q = q + c_q*(math.atan(arg) + 0.7) # arctan ranges from -pi/2 to pi/2 
+                # in order to avoid negative values, add 0.7
                 # multiply with quality weight c_q
     
             # 3) determine the number of unbeatable trump cards in card_list
@@ -276,10 +276,14 @@ def calculate_trump_power(card_list, bock, schweinchen, special_solo):
                     break # break from for-loop if row of unbeatable cards is disrupted
                    
             
-            power = (q * len(card_list) + c_t*t)/c
+            power = (q + len(card_list) + c_t*t)/c
 
             if power > 100: # perfect cards = weakest unbeatable card hand, since there are also stronger unbeatable card hands cap power at 100
-                power = 100
+                if len(card_list) == 12:
+                    power = 100
+                else:
+                    print(len(card_list))
+                    power = 99 # never assign trump power of 100 if player has non-trump cards
         return power
     
     else: # invalid input variable types
@@ -311,7 +315,7 @@ def main():
     # e.g. python TrumpRating.py --solo O (The script name ifself is one element of sys.argv.)
     for i in range(len(sys.argv)):
         if sys.argv[i] == "--solo":
-            # check argument after "--solo" after for solo type-
+            # check argument after "--solo" for solo type
             if i < len(sys.argv):
                 if sys.argv[i+1] in special_rules:
                     special_solo = sys.argv[i+1]
@@ -340,7 +344,6 @@ def main():
     for i in range(4):
         print('Spieler ' + str(i + 1) + ': ' + str(get_trump(player_cards[i], special_solo)) + "\n Trumpfstärke: " + str(calculate_trump_power(get_trump(player_cards[i], special_solo), bock, schweinchen, special_solo)))
 
-
 def normalization(bock, schweinchen, special_solo):
     # returns the trump rating for the least unbeatable hands under the specified options for bock, schweinchen and special_solo
     # bock - Boolean
@@ -360,7 +363,7 @@ def normalization(bock, schweinchen, special_solo):
             elif schweinchen and not(bock):
                 perfect_cards = ["S9", "S9", "SK", "SK", "SU", "SU", "EO", "EO", "H10", "H10", "SA", "SA"] # with Schweinchen
             elif not(schweinchen) and not(bock):
-                perfect_cards = ["S9", "S9", "SK", "SK", "SA", "SU" "BO", "BO", "EO", "EO", "H10", "H10"] # without Bock and Schweinchen
+                perfect_cards = ["S9", "S9", "SK", "SK", "SA", "SU", "BO", "BO", "EO", "EO", "H10", "H10"] # without Bock and Schweinchen
 
         return calculate_trump_power(perfect_cards, bock, schweinchen, special_solo)
     else:
