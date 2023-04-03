@@ -1,4 +1,16 @@
-Ausführen mit "python TrumpRating.py"
+Print "python TrumpRating.py" to execute the script
 
 
-optionaler Parameter für Soloregeln: "--solo" mit möglichen Übergabeparametern "n" - none, "U" - Untersolo, "O" - Obersolo, "H" - Herzsolo, "B" - Blattsolo, "E" - Eichelsolo
+optional parameter for solo rules: "--solo" with possible options 
+
+"n" - none,
+
+"U" - Untersolo,
+
+"O" - Obersolo,
+
+"H" - Herzsolo,
+
+"B" - Blattsolo,
+
+"E" - Eichelsolo
