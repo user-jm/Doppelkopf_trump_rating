@@ -1,0 +1,1 @@
+# Doppelkopf_trump_rating
