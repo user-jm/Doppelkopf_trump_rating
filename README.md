@@ -1,4 +1,4 @@
-Print "python TrumpRating.py" to execute the script
+Execute the script by entering "python TrumpRating.py" into console/terminal
 
 
 optional parameter for solo rules: "--solo" with possible options 
